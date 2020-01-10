@@ -45,7 +45,7 @@ configurations.all {
 
 project.buildDir = 'bin'
 
-mainClassName = "cassdemo.Main"
+mainClassName = "DistributedReservation.Main"
 
 run {
     //systemProperty 'logback.configurationFile', 'logback.xml'

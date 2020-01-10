@@ -1,10 +1,10 @@
-package cassdemo;
+package DistributedReservation;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import cassdemo.backend.BackendException;
-import cassdemo.backend.BackendSession;
+import DistributedReservation.Backend.BackendException;
+import DistributedReservation.Backend.BackendSession;
 
 public class Main {
 
@@ -23,7 +23,7 @@ public class Main {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-			
+
 		BackendSession session = new BackendSession(contactPoint, keyspace);
 
 		session.upsertUser("PP", "Adam", 609, "A St");

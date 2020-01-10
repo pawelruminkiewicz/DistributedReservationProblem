@@ -1,4 +1,4 @@
-package cassdemo.backend;
+package DistributedReservation.Backend;
 
 import com.datastax.driver.core.*;
 import org.slf4j.Logger;

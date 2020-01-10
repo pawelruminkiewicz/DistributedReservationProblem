@@ -1,4 +1,4 @@
-package cassdemo.backend;
+package DistributedReservation.Backend;
 
 public class BackendException extends Exception {
 	private static final long serialVersionUID = 1L;
