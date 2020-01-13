@@ -25,16 +25,11 @@ public class Main {
 		}
 
 		BackendSession session = new BackendSession(contactPoint, keyspace);
+		int maxTripSize = 20;
+		int guideCount = 10;
 
-		session.upsertUser("PP", "Adam", 609, "A St");
-		session.upsertUser("PP", "Ola", 509, null);
-		session.upsertUser("UAM", "Ewa", 720, "B St");
-		session.upsertUser("PP", "Kasia", 713, "C St");
-
-		String output = session.selectAll();
-		System.out.println("Users: \n" + output);
-
-		session.deleteAll();
+		TourCompany tourCompany = new TourCompany(1, session, maxTripSize, guideCount);
+		Group.createClients(10);
 
 		System.exit(0);
 	}

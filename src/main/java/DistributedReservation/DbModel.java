@@ -14,11 +14,11 @@ public class DbModel {
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(tableName).append("(")
                 .append("id uuid, ")
-                .append("guideId int,")
-                .append("visitorsGroupId int,")
-                .append("visitorsGroupSize int,")
+                .append("tourCompanyId int,")
+                .append("groupId int,")
+                .append("groupSize int,")
                 .append("timestamp bigint,")
-                .append("PRIMARY KEY (trainId, id));");
+                .append("PRIMARY KEY (tourCompanyId, id));");
 
         String query = sb.toString();
         session.execute(query);
