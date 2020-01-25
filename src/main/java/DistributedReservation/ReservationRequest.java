@@ -77,12 +77,12 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
     public boolean isApproved(int groupId, int tourCompanyId) {
         List<ReservationRequest> reservationRequests = getUpdatedReservations(tourCompanyId);
         ArrayList<Integer> guides = new ArrayList<>();
-        for (int i = 0; i < groupSize; i++) {
-            guides.add(groupSize);
+        for (int i = 0; i < guideCount; i++) {
+            guides.add(maxGroupSize);
         }
         for (ReservationRequest reservationRequest : reservationRequests) {
             boolean decision = false;
-            for (int i = 0; i < groupSize; i++) {
+            for (int i = 0; i < guideCount; i++) {
                 int availablePlacesInTrip = guides.get(i);
                 if (availablePlacesInTrip >= reservationRequest.groupSize) {
                     guides.set(i, availablePlacesInTrip - reservationRequest.groupSize);

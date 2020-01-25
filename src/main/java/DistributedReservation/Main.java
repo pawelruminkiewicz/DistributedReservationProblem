@@ -40,6 +40,7 @@ public class Main {
 
 		TourCompany tourCompany = new TourCompany(tourCompanyId, session, maxGroupSize, guideCount);
 		Group.createClients(amountOfGroups, tourCompany, maxGroupSize, delayBeforeStart, groupStartDelayRange, checkReservationDelay, stats);
+		stats.showFinalStats();
 
 		System.exit(0);
 
