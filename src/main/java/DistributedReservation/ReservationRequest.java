@@ -10,7 +10,7 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
     private int groupId;
     private int groupSize;
     private int guideCount;
-    private int maxTripSize;
+    private int maxGroupSize;
     private long timestamp;
 
     @Override
@@ -21,13 +21,13 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
         return this.timestamp < m2.timestamp ? -1 : 1;
     }
 
-    public ReservationRequest(Session session, int tourCompanyId, int groupId, int groupSize, int guideCount, int maxTripSize) {
+    public ReservationRequest(Session session, int tourCompanyId, int groupId, int groupSize, int guideCount, int maxGroupSize) {
         super(session);
         this.tourCompanyId = tourCompanyId;
         this.groupId = groupId;
         this.groupSize = groupSize;
         this.guideCount = guideCount;
-        this.maxTripSize = maxTripSize;
+        this.maxGroupSize = maxGroupSize;
     }
 
     public ReservationRequest(Session session, int tourCompanyId, int groupId, int groupSize, int guideCount, int maxGroupSize, long timestamp) {
@@ -56,7 +56,7 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
         ArrayList<Integer> guides = new ArrayList<>();
 
         for (int i = 0; i < guideCount; i++) {
-            guides.add(maxTripSize);
+            guides.add(maxGroupSize);
             List<Integer> guide = new ArrayList<>();
             reservations.add(guide);
         }
@@ -111,7 +111,7 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
                         r.getInt("groupId"),
                         r.getInt("groupSize"),
                         guideCount,
-                        maxTripSize,
+                        maxGroupSize,
                         r.getLong("timestamp")));
             } else {
                 for (int i = 0; i < reservationRequestList.size(); i++) {
@@ -141,7 +141,7 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
                     r.getInt("groupId"),
                     r.getInt("groupSize"),
                     guideCount,
-                    maxTripSize,
+                    maxGroupSize,
                     r.getLong("timestamp")));
         });
         Collections.sort(reservationRequestList);

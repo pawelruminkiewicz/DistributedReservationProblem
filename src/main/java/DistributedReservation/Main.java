@@ -23,6 +23,7 @@ public class Main {
 		int checkReservationDelay = 100;
 
 
+		Stats stats = new Stats();
 
 		Properties properties = new Properties();
 		try {
@@ -38,8 +39,9 @@ public class Main {
 
 
 		TourCompany tourCompany = new TourCompany(tourCompanyId, session, maxGroupSize, guideCount);
-		Group.createClients(amountOfGroups, tourCompany, maxGroupSize, delayBeforeStart, groupStartDelayRange, checkReservationDelay);
+		Group.createClients(amountOfGroups, tourCompany, maxGroupSize, delayBeforeStart, groupStartDelayRange, checkReservationDelay, stats);
 
 		System.exit(0);
+
 	}
 }
