@@ -24,12 +24,19 @@ public class DbModel {
         session.execute(query);
     }
 
-    public ResultSet execute(String query) {;
-        return session.execute(query);
-    }
-
-    public ResultSet executeQuorum(String query) {
-        Statement statement = new SimpleStatement(query).setConsistencyLevel(ConsistencyLevel.QUORUM);
+    public ResultSet execute(String query, boolean quorum) {
+        Statement statement;
+        if(quorum) {
+            statement = new SimpleStatement(query).setConsistencyLevel(ConsistencyLevel.QUORUM);
+        }
+        else {
+            return session.execute(query);
+        }
         return session.execute(statement);
     }
+
+    public ResultSet execute(String query) {
+        return execute(query, false);
+    }
+
 }
