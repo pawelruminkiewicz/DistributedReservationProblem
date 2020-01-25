@@ -3,39 +3,58 @@ package DistributedReservation;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Group {
+public class Group implements Runnable {
     private int id;
-    private int count;
     private TourCompany tourCompany;
-    private int maxGroupSize;
+    private int delayBeforeStart;
+    private int groupStartDelayRange;
+    private static int groupCounter = 0;
+    private int checkReservationDelay;
+    private int groupSize;
 
-    public Group(int id, int count, TourCompany tourCompany, int maxGroupSize) implements Runnable {
+    public Group(TourCompany tourCompany, int maxGroupSize, int delayBeforeStart, int groupStartDelayRange, int checkReservationDelay) {
         Random generator = new Random();
-        this.id = id;
-        this.count = count;
+        this.id = this.groupCounter;
         this.tourCompany = tourCompany;
-        this.maxGroupSize = maxGroupSize;
+        this.groupSize = generator.nextInt(maxGroupSize);
+        this.delayBeforeStart = delayBeforeStart;
+        this.groupStartDelayRange = groupStartDelayRange;
+        this.checkReservationDelay = checkReservationDelay;
+        this.groupCounter++;
+
     }
 
-    public void run(){
+    public void run() {
         Random generator = new Random();
         try {
-            Thread.sleep(delayBeforeStart + generator.nextInt(groupStartDelayRange));
-            if (tourCompany.reserveGuide(id, count, checkReservationDelay)) {
-                if (generator.nextInt(25) == 5) {
-                    tourCompany.cancelReservation(id);
+            Thread.sleep(this.delayBeforeStart + generator.nextInt(this.groupStartDelayRange));
+            if (this.tourCompany.reserveGuide(this.id, this.groupSize, checkReservationDelay)) {
+                if (generator.nextInt(100) < 4) {
+                    //stats.canceled
+                    this.tourCompany.cancelReservation(this.id);
                 } else {
-                    if (tourCompany.)
-
+                    if (this.tourCompany.isReservationDone(this.id)){
+                        //stats.correct
+                    }
+                    else{
+                        //stats.incorrect
+                    }
                 }
             }
+            else{
+                this.tourCompany.cancelReservation(this.id);
+                //stats.stay
+
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void createClients(int count) {
+    public static void createClients(int amountOfGroups, TourCompany tourCompany, int maxGroupSize, int delayBeforeStart, int groupStartDelayRange, int checkReservationDelay) {
         ArrayList<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Thread thread = new Thread(new Group(tourCompany, maxGroupSize));
+        for (int i = 0; i < amountOfGroups; i++) {
+            Thread thread = new Thread(new Group(tourCompany, maxGroupSize, delayBeforeStart, groupStartDelayRange, checkReservationDelay));
             thread.start();
             threads.add(thread);
         }

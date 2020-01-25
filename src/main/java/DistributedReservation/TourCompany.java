@@ -8,38 +8,39 @@ public class TourCompany {
     private int id;
     private Session session;
 
-    private  int maxTripSize;
+    private  int maxGroupSize;
     private int guideCount;
 
-    public TourCompany(int id, BackendSession backend, int maxTripSize, int guideCount) {
+    public TourCompany(int id, BackendSession backend, int maxGroupSize, int guideCount) {
         this.id = id;
         this.session = backend.getSession();
-        this.maxTripSize = maxTripSize;
+        this.maxGroupSize = maxGroupSize;
         this.guideCount = guideCount;
     }
 
-    public void reserveGuide(int clientId, int tripSize, int delay) {
-        ReservationRequest reservationRequest = new ReservationRequest(session, id, clientId, ......, tripSize);
+    public boolean reserveGuide(int groupId, int groupSize, int delay) {
+        ReservationRequest reservationRequest = new ReservationRequest(session, this.id, groupId, groupSize, guideCount,maxGroupSize);
         reservationRequest.commit();
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return reservationRequest.isApproved(groupId, this.id);
     }
 
-    public void cancelReservation(int clientId) {
-        ReservationRequest reservationRequest = new ReservationRequest(session, id, clientId, -1, ..., tripSize);
+    public void cancelReservation(int groupId) {
+        ReservationRequest reservationRequest = new ReservationRequest(session, id, groupId, -1, guideCount,maxGroupSize);
         reservationRequest.commit();
     }
 
     public boolean isReservationDone(int groupId) {
-        ReservationRequest reservationRequest = new ReservationRequest(session, id, groupId, 0, guideCount, maxTripSize);
+        ReservationRequest reservationRequest = new ReservationRequest(session, id, groupId, 0, guideCount, maxGroupSize);
         try {
             Thread.sleep(2000);
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
-        return reservationRequest.
+        return reservationRequest.isApproved(groupId, this.id);
     }
 }

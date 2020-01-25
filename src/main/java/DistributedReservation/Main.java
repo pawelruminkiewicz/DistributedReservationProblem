@@ -14,6 +14,16 @@ public class Main {
 		String contactPoint = null;
 		String keyspace = null;
 
+		int tourCompanyId = 1;
+		int maxGroupSize = 20;
+		int guideCount = 10;
+		int amountOfGroups = 25;
+		int delayBeforeStart = 1000;
+		int groupStartDelayRange = 100;
+		int checkReservationDelay = 100;
+
+
+
 		Properties properties = new Properties();
 		try {
 			properties.load(Main.class.getClassLoader().getResourceAsStream(PROPERTIES_FILENAME));
@@ -25,11 +35,10 @@ public class Main {
 		}
 
 		BackendSession session = new BackendSession(contactPoint, keyspace);
-		int maxTripSize = 20;
-		int guideCount = 10;
 
-		TourCompany tourCompany = new TourCompany(1, session, maxTripSize, guideCount);
-		Group.createClients(10);
+
+		TourCompany tourCompany = new TourCompany(tourCompanyId, session, maxGroupSize, guideCount);
+		Group.createClients(amountOfGroups, tourCompany, maxGroupSize, delayBeforeStart, groupStartDelayRange, checkReservationDelay);
 
 		System.exit(0);
 	}

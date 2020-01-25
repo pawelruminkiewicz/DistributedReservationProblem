@@ -28,11 +28,10 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
         this.groupSize = groupSize;
         this.guideCount = guideCount;
         this.maxTripSize = maxTripSize;
-        this.timestamp = timestamp;
     }
 
-    public ReservationRequest(Session session, int tourCompanyId, int groupId, int groupSize, int guideCount, int maxTripSize, long timestamp) {
-        this(session, tourCompanyId, groupId, groupSize, guideCount, maxTripSize);
+    public ReservationRequest(Session session, int tourCompanyId, int groupId, int groupSize, int guideCount, int maxGroupSize, long timestamp) {
+        this(session, tourCompanyId, groupId, groupSize, guideCount, maxGroupSize);
         this.timestamp = timestamp;
     }
 
@@ -51,8 +50,8 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
         execute(query);
     }
 
-    public List<List<Integer>>  giveReservation() {
-        List<ReservationRequest> reservationRequests = getUpdatedReservations();
+    public List<List<Integer>>  giveReservation(int tourCompanyId) {
+        List<ReservationRequest> reservationRequests = getUpdatedReservations(tourCompanyId);
         List<List<Integer>> reservations = new ArrayList<>();
         ArrayList<Integer> guides = new ArrayList<>();
 
@@ -75,7 +74,7 @@ public class ReservationRequest extends DbModel implements Comparable<Reservatio
         return reservations;
     }
 
-    public boolean isApproved(int clientId, int tourCompanyId) {
+    public boolean isApproved(int groupId, int tourCompanyId) {
         List<ReservationRequest> reservationRequests = getUpdatedReservations(tourCompanyId);
         ArrayList<Integer> guides = new ArrayList<>();
         for (int i = 0; i < groupSize; i++) {
