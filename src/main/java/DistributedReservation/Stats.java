@@ -39,7 +39,7 @@ public class Stats {
     public void fake(Group g){
         this.log("!!!!!", g.getId(), "Are you fu@!%#g kidding me?!");
         fakeReservations++;
-        cummulativeRefund = cummulativeRefund + cummulativeRefund * singleRefundCost;
+        cummulativeRefund = cummulativeRefund + g.getGroupSize() * singleRefundCost;
     }
 
     public void showFinalStats(){

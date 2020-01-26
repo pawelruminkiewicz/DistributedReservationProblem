@@ -16,8 +16,8 @@ public class Main {
 
 		int tourCompanyId = 1;
 		int maxGroupSize = 20;
-		int guideCount = 10;
-		int amountOfGroups = 25;
+		int guideCount = 100;
+		int amountOfGroups = 250;
 		int delayBeforeStart = 1000;
 		int groupStartDelayRange = 100;
 		int checkReservationDelay = 100;
